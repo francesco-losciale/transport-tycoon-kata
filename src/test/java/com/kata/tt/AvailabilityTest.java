@@ -23,4 +23,15 @@ public class AvailabilityTest {
         assertThat(availability.getAvailableTruck2()).isNotNull();
         assertThat(availability.getAvailableShip()).isNotNull();
     }
+
+    @Test
+    public void When_Truck1_Is_Unavailable_Then_Only_Other_Transporters_Are_Available() {
+        Truck1 truck1 = new Truck1();
+
+        availability.unavailable(truck1);
+
+        assertThat(availability.getAvailableTruck1()).isNull();
+        assertThat(availability.getAvailableTruck2()).isNotNull();
+        assertThat(availability.getAvailableShip()).isNotNull();
+    }
 }

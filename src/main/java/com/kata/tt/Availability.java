@@ -29,4 +29,8 @@ public class Availability {
     public Truck2 getAvailableTruck2() {
         return this.truck2;
     }
+
+    public void unavailable(Truck1 truck1) {
+        this.truck1 = null;
+    }
 }

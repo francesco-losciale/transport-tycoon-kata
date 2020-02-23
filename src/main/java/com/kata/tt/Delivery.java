@@ -10,9 +10,12 @@ public class Delivery {
         this.deliveryClock = deliveryClock;
     }
 
-    public void process(String deliveryName) {
+    public void process(String deliveryDestination) {
         if (availability.getAvailableTruck1() == null) {
             deliveryClock.tick();
+            return; // it will be a loop
         }
+        final Truck1 availableTruck1 = availability.getAvailableTruck1();
+        availableTruck1.start(deliveryDestination, availability);
     }
 }
