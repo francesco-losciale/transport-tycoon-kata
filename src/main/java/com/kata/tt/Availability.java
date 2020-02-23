@@ -33,4 +33,8 @@ public class Availability {
     public void unavailable(Truck1 truck1) {
         this.truck1 = null;
     }
+
+    public void unavailable(Truck1 truck1, int instantOfNextAvailability) {
+        throw new RuntimeException();
+    }
 }
