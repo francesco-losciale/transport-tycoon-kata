@@ -16,6 +16,6 @@ public class Delivery {
             return; // it will be a loop
         }
         final Truck1 availableTruck1 = availability.getAvailableTruck1();
-        availableTruck1.start(deliveryDestination, availability);
+        availableTruck1.start(deliveryDestination);
     }
 }

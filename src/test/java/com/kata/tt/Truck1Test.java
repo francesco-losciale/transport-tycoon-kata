@@ -7,15 +7,13 @@ import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.internal.verification.VerificationModeFactory.atLeast;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Destination.class)
@@ -35,7 +33,7 @@ public class Truck1Test {
     @Test
     public void When_Truck1_Starts_Then_Ask_Destination_To_Know_How_Long_It_Would_Take() {
         String deliveryDestination = "test";
-        truck1.start(deliveryDestination, availability);
+        truck1.start(deliveryDestination);
 
         PowerMockito.verifyStatic(Destination.class);
         Destination.instantOfDelivery(truck1, deliveryDestination);
@@ -48,7 +46,7 @@ public class Truck1Test {
         PowerMockito.mockStatic(Destination.class);
         BDDMockito.given(Destination.instantOfArrivalToFactory(truck1, deliveryDestination)).willReturn(0);
 
-        truck1.start(deliveryDestination, availability);
+        truck1.start(deliveryDestination);
 
         verify(availability).unavailable(truck1, 0);
     }
@@ -59,8 +57,13 @@ public class Truck1Test {
         PowerMockito.mockStatic(Destination.class);
         BDDMockito.given(Destination.instantOfArrivalToFactory(truck1, deliveryDestination)).willReturn(5);
 
-        truck1.start(deliveryDestination, availability);
+        truck1.start(deliveryDestination);
 
         verify(availability).unavailable(truck1, 5);
+    }
+
+    @Test
+    public void When_Truck1_And_Truck1_Compared_Then_They_Are_Equal() {
+        assertThat(new Truck1(availability)).isEqualTo(new Truck1(availability));
     }
 }

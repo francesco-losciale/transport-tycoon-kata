@@ -51,6 +51,6 @@ public class DeliveryTest {
 
         delivery.process(shipmentFromFactory);
 
-        verify(truck1).start(shipmentFromFactory, availability);
+        verify(truck1).start(shipmentFromFactory);
     }
 }
