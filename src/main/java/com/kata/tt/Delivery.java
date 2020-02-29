@@ -30,7 +30,7 @@ public class Delivery {
 
     private void throwExceptionIfWaitingTooLong() {
         if (deliveryClock.currentInstant() >= TIMEOUT_INSTANT) {
-            throw new RuntimeException("Too long waiting");
+            throw new RuntimeException("Waiting too long for available trucks");
         }
     }
 }
