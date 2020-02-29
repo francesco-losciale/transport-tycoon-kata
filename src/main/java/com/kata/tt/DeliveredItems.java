@@ -14,7 +14,7 @@ public class DeliveredItems {
         return Collections.unmodifiableList(deliveries);
     }
 
-    public void store(Pair<String, Integer> newCompletedDelivery) {
-        deliveries.add(newCompletedDelivery);
+    public void store(String deliveryDestination, Integer deliveryInstant) {
+        deliveries.add(new Pair<>(deliveryDestination, deliveryInstant));
     }
 }

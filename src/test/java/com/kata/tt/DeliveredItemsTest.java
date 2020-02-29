@@ -10,11 +10,10 @@ public class DeliveredItemsTest {
 
     @Test
     public void When_New_Item_Delivered_Then_Check_It_Is_Stored() {
-        Pair<String, Integer> element = new Pair<>("B", 5);
         DeliveredItems deliveredItems = new DeliveredItems();
 
-        deliveredItems.store(element);
+        deliveredItems.store("B", 5);
 
-        assertThat(deliveredItems.items()).contains(element);
+        assertThat(deliveredItems.items()).contains(new Pair<>("B", 5));
     }
 }

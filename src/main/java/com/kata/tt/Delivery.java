@@ -6,10 +6,12 @@ public class Delivery {
 
     private Availability availability;
     private DeliveryClock deliveryClock;
+    private DeliveredItems deliveredItems;
 
-    public Delivery(Availability availability, DeliveryClock deliveryClock) {
+    public Delivery(Availability availability, DeliveryClock deliveryClock, DeliveredItems deliveredItems) {
         this.availability = availability;
         this.deliveryClock = deliveryClock;
+        this.deliveredItems = deliveredItems;
     }
 
     public void process(String deliveryDestination) {
@@ -23,6 +25,7 @@ public class Delivery {
             deliveryClock.tick();
             throwExceptionIfWaitingTooLong();
         }
+        deliveredItems.store(deliveryDestination, instantOfDelivery);
     }
 
     private void throwExceptionIfWaitingTooLong() {

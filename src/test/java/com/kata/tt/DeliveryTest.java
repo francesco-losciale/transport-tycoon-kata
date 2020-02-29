@@ -24,6 +24,9 @@ public class DeliveryTest {
     @Mock
     private Truck1 truck1;
 
+    @Mock
+    private DeliveredItems deliveredItems;
+
     @Test(expected = RuntimeException.class)
     public void When_Transporters_Not_Available_Then_System_Error_At_Instant_1000() {
         when(availability.getAvailableTruck1()).thenReturn(null);
@@ -35,11 +38,20 @@ public class DeliveryTest {
     @Test
     public void When_New_Delivery_Then_Instruct_Truck() {
         when(availability.getAvailableTruck1()).thenReturn(truck1);
-        String shipmentFromFactory = "A";
 
-        delivery.process(shipmentFromFactory);
+        delivery.process("A");
 
-        verify(truck1).start(shipmentFromFactory);
+        verify(truck1).start("A");
     }
 
+    @Test
+    public void When_Delivery_Completed_Then_DeliveryItem_Has_Been_Stored() {
+        when(availability.getAvailableTruck1()).thenReturn(truck1);
+        when(truck1.start("B")).thenReturn(5);
+        when(clock.currentInstant()).thenReturn(5);
+
+        delivery.process("B");
+
+        verify(deliveredItems).store("B", 5);
+    }
 }
