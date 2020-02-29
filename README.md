@@ -3,8 +3,5 @@
 
 Complete the following:
 
-Now Truck1 needs call Destination to know the instant of 
-    - the delivery unload (to B or PORT)
-    - the arrival to Factory on the way back
-
-These two values are passed to Availability
+Add the logic to make Truck1 to return to Factory (new integration test)
+Add logic to make Truck2 in play (new integration test)
