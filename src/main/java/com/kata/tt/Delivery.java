@@ -2,6 +2,8 @@ package com.kata.tt;
 
 public class Delivery {
 
+    private final int TIMEOUT_INSTANT = 20;
+
     private Availability availability;
     private DeliveryClock deliveryClock;
 
@@ -11,11 +13,17 @@ public class Delivery {
     }
 
     public void process(String deliveryDestination) {
-        if (availability.getAvailableTruck1() == null) {
+        while (availability.getAvailableTruck1() == null) {
+            throwExceptionIfWaitingTooLong();
             deliveryClock.tick();
-            return; // it will be a loop
         }
         final Truck1 availableTruck1 = availability.getAvailableTruck1();
         availableTruck1.start(deliveryDestination);
+    }
+
+    private void throwExceptionIfWaitingTooLong() {
+        if (deliveryClock.currentInstant() >= TIMEOUT_INSTANT) {
+            throw new RuntimeException("Too long waiting");
+        }
     }
 }

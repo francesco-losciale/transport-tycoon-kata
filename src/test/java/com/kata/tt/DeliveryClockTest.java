@@ -1,5 +1,6 @@
 package com.kata.tt;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -7,7 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DeliveryClockTest {
 
-    private DeliveryClock deliveryClock = new DeliveryClock();
+    private DeliveryClock deliveryClock;
+
+    @Before
+    public void setUp() throws Exception {
+        deliveryClock = new DeliveryClock();
+    }
 
     @Test
     public void When_DeliveryClock_Created_Then_Current_Instant_Is_Zero() {
@@ -21,4 +27,5 @@ public class DeliveryClockTest {
 
         assertThat(deliveryClock.currentInstant()).isEqualTo(1);
     }
+
 }

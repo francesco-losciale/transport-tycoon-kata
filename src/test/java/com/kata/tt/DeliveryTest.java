@@ -34,13 +34,12 @@ public class DeliveryTest {
         verifyZeroInteractions(clock);
     }
 
-    @Test
-    public void When_Transporters_Not_Available_Then_Do_Tick_Clock() {
+    @Test(expected = RuntimeException.class)
+    public void When_Transporters_Not_Available_Then_System_Error_At_Instant_20() {
         when(availability.getAvailableTruck1()).thenReturn(null);
+        when(clock.currentInstant()).thenReturn(20);
 
         delivery.process("delivery-name");
-
-        verify(clock).tick();
     }
 
     @Test
@@ -52,4 +51,5 @@ public class DeliveryTest {
 
         verify(truck1).start(shipmentFromFactory);
     }
+
 }
