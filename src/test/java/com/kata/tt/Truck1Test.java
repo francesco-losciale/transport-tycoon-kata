@@ -62,6 +62,18 @@ public class Truck1Test {
     }
 
     @Test
+    public void When_Truck1_Starts_Then_Check_Instant_Of_Delivery() {
+        String deliveryDestination = "test";
+        PowerMockito.mockStatic(Destination.class);
+        BDDMockito.given(Destination.instantOfDelivery(truck1, deliveryDestination)).willReturn(5);
+
+        final Integer instantOfDelivery = truck1.start(deliveryDestination);
+
+        assertThat(instantOfDelivery).isEqualTo(5);
+    }
+
+
+    @Test
     public void When_Truck1_And_Truck1_Compared_Then_They_Are_Equal() {
         assertThat(new Truck1(availability)).isEqualTo(new Truck1(availability));
     }

@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,15 +23,6 @@ public class DeliveryTest {
 
     @Mock
     private Truck1 truck1;
-
-    @Test
-    public void When_Transporters_Available_Then_Do_Not_Tick_Clock() {
-        when(availability.getAvailableTruck1()).thenReturn(truck1);
-
-        delivery.process("delivery-name");
-
-        verifyZeroInteractions(clock);
-    }
 
     @Test(expected = RuntimeException.class)
     public void When_Transporters_Not_Available_Then_System_Error_At_Instant_1000() {

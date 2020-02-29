@@ -14,11 +14,15 @@ public class Delivery {
 
     public void process(String deliveryDestination) {
         while (availability.getAvailableTruck1() == null) {
-            throwExceptionIfWaitingTooLong();
             deliveryClock.tick();
+            throwExceptionIfWaitingTooLong();
         }
-        final Truck1 availableTruck1 = availability.getAvailableTruck1();
-        availableTruck1.start(deliveryDestination);
+        final Truck1 truck1 = availability.getAvailableTruck1();
+        final Integer instantOfDelivery = truck1.start(deliveryDestination);
+        while (deliveryClock.currentInstant() < instantOfDelivery) {
+            deliveryClock.tick();
+            throwExceptionIfWaitingTooLong();
+        }
     }
 
     private void throwExceptionIfWaitingTooLong() {

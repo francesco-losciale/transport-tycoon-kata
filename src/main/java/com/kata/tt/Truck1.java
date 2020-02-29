@@ -12,10 +12,11 @@ public class Truck1 {
         this.availability = availability;
     }
 
-    public void start(String shipmentFromFactory) {
-        instantOfDelivery(this, shipmentFromFactory);
+    public Integer start(String shipmentFromFactory) {
+        final Integer instantOfDelivery = instantOfDelivery(this, shipmentFromFactory);
         final Integer instantOfArrivalToFactory = instantOfArrivalToFactory(this, shipmentFromFactory);
         availability.unavailable(this, instantOfArrivalToFactory);
+        return instantOfDelivery;
     }
 
     @Override
