@@ -2,7 +2,7 @@ package com.kata.tt;
 
 public class Delivery {
 
-    private final int TIMEOUT_INSTANT = 20;
+    private final int TIMEOUT_INSTANT = 1000;
 
     private Availability availability;
     private DeliveryClock deliveryClock;
