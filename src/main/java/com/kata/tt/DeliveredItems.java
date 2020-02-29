@@ -1,6 +1,7 @@
 package com.kata.tt;
 
-import javafx.util.Pair;
+
+import org.javatuples.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;

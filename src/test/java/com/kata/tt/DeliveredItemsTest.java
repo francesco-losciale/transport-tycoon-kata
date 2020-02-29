@@ -1,6 +1,6 @@
 package com.kata.tt;
 
-import javafx.util.Pair;
+import org.javatuples.Pair;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
