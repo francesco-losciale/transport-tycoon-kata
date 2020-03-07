@@ -6,24 +6,36 @@ import com.kata.tt.Delivery;
 import com.kata.tt.DeliveryClock;
 import com.kata.tt.Truck1;
 import org.javatuples.Pair;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class IntegrationTest {
 
-    @Test
-    public void When_Truck1_To_B_Then_Instant_Is_5() {
-        DeliveryClock deliveryClock = new DeliveryClock();
-        Availability availability = new Availability();
-        DeliveredItems deliveredItems = new DeliveredItems();
-        Truck1 truck1 = new Truck1(availability, deliveredItems);
-        availability.makeAvailable(truck1);
-        Delivery delivery = new Delivery(availability, deliveryClock, truck1);
+    private DeliveryClock deliveryClock = new DeliveryClock();
+    private Availability availability = new Availability();
+    private DeliveredItems deliveredItems = new DeliveredItems();
+    private Truck1 truck1 = new Truck1(availability, deliveredItems);
+    private Delivery delivery = new Delivery(availability, deliveryClock, truck1);
 
+    @Before
+    public void setUp() throws Exception {
+        availability.makeAvailable(truck1);
+    }
+
+    @Test
+    public void When_Truck1_Arrives_To_B_Then_Instant_Is_5() {
         delivery.process("B");
 
         assertThat(deliveredItems.items()).contains(new Pair<>("B", 5));
+    }
+
+
+    @Test
+    public void When_Truck1_Returns_To_Factory_Then_Instant_Is_10() {
+        delivery.process("B");
+
         assertThat(deliveryClock.currentInstant()).isEqualTo(10);
     }
 }
