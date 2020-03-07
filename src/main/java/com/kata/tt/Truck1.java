@@ -20,14 +20,14 @@ public class Truck1 implements Observer {
     public Integer start(String shipmentFromFactory) {
         instantOfCurrentDelivery = instantOfDelivery(this, shipmentFromFactory);
         instantOfReturnToFactoryAfterDelivered = instantOfArrivalToFactory(this, shipmentFromFactory);
-        availability.unavailable(this, instantOfReturnToFactoryAfterDelivered);
+        availability.makeUnavailable(this);
         return instantOfCurrentDelivery;
     }
 
     @Override
     public void update(Observable deliveryClock, Object currentInstant) {
         if (currentInstant == instantOfReturnToFactoryAfterDelivered) {
-            availability.available(this);
+            availability.makeAvailable(this);
         }
     }
 

@@ -8,18 +8,18 @@ import com.kata.tt.Truck1;
 import org.javatuples.Pair;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class IntegrationTest {
 
     @Test
     public void When_Truck1_To_B_Then_Instant_Is_5() {
         DeliveryClock deliveryClock = new DeliveryClock();
-        Availability availability = new Availability(deliveryClock);
+        Availability availability = new Availability();
         DeliveredItems deliveredItems = new DeliveredItems();
         Truck1 truck1 = new Truck1(availability);
-        availability.register(truck1);
-        Delivery delivery = new Delivery(availability, deliveryClock, deliveredItems);
+        availability.makeAvailable(truck1);
+        Delivery delivery = new Delivery(availability, deliveryClock, deliveredItems, truck1);
 
         delivery.process("B");
 

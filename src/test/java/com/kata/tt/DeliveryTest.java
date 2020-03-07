@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -29,7 +30,7 @@ public class DeliveryTest {
 
     @Test(expected = RuntimeException.class)
     public void When_Transporters_Not_Available_Then_System_Error_At_Instant_1000() {
-        when(availability.getAvailableTruck1()).thenReturn(null);
+        when(availability.isAvailable(any())).thenReturn(false);
         when(clock.currentInstant()).thenReturn(1000);
 
         delivery.process("delivery-name");
@@ -37,7 +38,7 @@ public class DeliveryTest {
 
     @Test
     public void When_New_Delivery_Then_Instruct_Truck() {
-        when(availability.getAvailableTruck1()).thenReturn(truck1);
+        when(availability.isAvailable(any())).thenReturn(true);
 
         delivery.process("A");
 
@@ -46,7 +47,7 @@ public class DeliveryTest {
 
     @Test
     public void When_Delivery_Completed_Then_DeliveryItem_Has_Been_Stored() {
-        when(availability.getAvailableTruck1()).thenReturn(truck1);
+        when(availability.isAvailable(any())).thenReturn(true);
         when(truck1.start("B")).thenReturn(5);
         when(clock.currentInstant()).thenReturn(5);
 

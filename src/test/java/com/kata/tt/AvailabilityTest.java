@@ -10,63 +10,36 @@ public class AvailabilityTest {
 
     private Availability availability;
     private DeliveryClock deliveryClock;
+    private Truck1 truck1;
+    private Truck2 truck2;
+    private Ship ship;
 
     @Before
     public void setUp() throws Exception {
         deliveryClock = new DeliveryClock();
-        availability = new Availability(deliveryClock);
-        availability.register(new Truck1(availability));
-        availability.register(new Truck2());
-        availability.register(new Ship());
+        availability = new Availability();
+        truck1 = new Truck1(availability);
+        truck2 = new Truck2();
+        ship = new Ship();
+        availability.makeAvailable(truck1);
+        availability.makeAvailable(truck2);
+        availability.makeAvailable(ship);
     }
 
     @Test
     public void When_Created_Then_All_The_Transporters_Are_Available() {
-        assertThat(availability.getAvailableTruck1()).isNotNull();
-        assertThat(availability.getAvailableTruck2()).isNotNull();
-        assertThat(availability.getAvailableShip()).isNotNull();
+        assertThat(availability.isAvailable(truck1)).isTrue();
+        assertThat(availability.isAvailable(truck2)).isTrue();
+        assertThat(availability.isAvailable(ship)).isTrue();
     }
 
     @Test
     public void When_Truck1_Is_Unavailable_Then_Only_Other_Transporters_Are_Available() {
-        Truck1 truck1 = new Truck1(availability);
+        availability.makeUnavailable(truck1);
 
-        availability.unavailable(truck1);
-
-        assertThat(availability.getAvailableTruck1()).isNull();
-        assertThat(availability.getAvailableTruck2()).isNotNull();
-        assertThat(availability.getAvailableShip()).isNotNull();
+        assertThat(availability.isAvailable(truck1)).isFalse();
+        assertThat(availability.isAvailable(truck2)).isTrue();
+        assertThat(availability.isAvailable(ship)).isTrue();
     }
 
-    @Test
-    public void When_Truck1_Is_Unavailable_Then_Becomes_Available_After_1_Tick() {
-        Truck1 truck1 = new Truck1(availability);
-
-        availability.unavailable(truck1, 1);
-        deliveryClock.tick();
-
-        assertThat(availability.getAvailableTruck1()).isNotNull();
-    }
-
-    @Test
-    public void When_Truck1_Is_Unavailable_For_2_Then_Is_NotAvailable_After_1_Tick() {
-        Truck1 truck1 = new Truck1(availability);
-
-        availability.unavailable(truck1, 2);
-        deliveryClock.tick();
-
-        assertThat(availability.getAvailableTruck1()).isNull();
-    }
-
-
-    @Test
-    public void When_Truck1_Is_Unavailable_For_2_Then_Becomes_Available_After_2_Tick() {
-        Truck1 truck1 = new Truck1(availability);
-
-        availability.unavailable(truck1, 2);
-        deliveryClock.tick();
-        deliveryClock.tick();
-
-        assertThat(availability.getAvailableTruck1()).isNotNull();
-    }
 }

@@ -50,8 +50,8 @@ public class Truck1Test {
         truck1.start(deliveryDestination);
         truck1.update(Mockito.mock(DeliveryClock.class), 1);
 
-        verify(availability).unavailable(truck1, 0);
-        verify(availability, never()).available(truck1);
+        verify(availability).makeUnavailable(truck1);
+        verify(availability, never()).makeAvailable(truck1);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class Truck1Test {
         truck1.start(deliveryDestination);
         truck1.update(Mockito.mock(DeliveryClock.class), 5);
 
-        verify(availability).available(truck1);
+        verify(availability).makeAvailable(truck1);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class Truck1Test {
         truck1.update(Mockito.mock(DeliveryClock.class), 1);
 
 
-        assertThat(availability.getAvailableTruck1()).isNull();
+        assertThat(availability.isAvailable(truck1)).isFalse();
     }
 
     @Test
@@ -99,7 +99,7 @@ public class Truck1Test {
         truck1.start("test");
         truck1.update(Mockito.mock(DeliveryClock.class), 5);
 
-        verify(availability).unavailable(truck1, 5);
+        verify(availability).makeUnavailable(truck1);
     }
 
     @Test
