@@ -1,15 +1,23 @@
 package com.kata.tt;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import static com.kata.tt.Destination.instantOfArrivalToFactory;
 import static com.kata.tt.Destination.instantOfDelivery;
 
-public class Truck1 {
+public class Truck1 implements Observer {
 
     private Availability availability;
     private String name = "Truck1";
 
     public Truck1(Availability availability) {
         this.availability = availability;
+    }
+
+    @Override
+    public void update(Observable deliveryClock, Object currentInstant) {
+
     }
 
     public Integer start(String shipmentFromFactory) {

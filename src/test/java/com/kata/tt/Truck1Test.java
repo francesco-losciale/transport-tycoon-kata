@@ -72,7 +72,6 @@ public class Truck1Test {
         assertThat(instantOfDelivery).isEqualTo(5);
     }
 
-
     @Test
     public void When_Truck1_And_Truck1_Compared_Then_They_Are_Equal() {
         assertThat(new Truck1(availability)).isEqualTo(new Truck1(availability));
