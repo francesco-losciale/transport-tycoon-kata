@@ -49,4 +49,8 @@ public class Availability {
     public void unavailable(Truck1 truck1, int instantOfNextAvailability) {
         this.instantToFactory.put(truck1, instantOfNextAvailability);
     }
+
+    public void available(Truck1 truck1) {
+
+    }
 }

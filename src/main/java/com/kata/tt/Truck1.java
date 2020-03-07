@@ -10,21 +10,25 @@ public class Truck1 implements Observer {
 
     private Availability availability;
     private String name = "Truck1";
+    private Integer instantOfCurrentDelivery;
+    private Integer instantOfReturnToFactoryAfterDelivered;
 
     public Truck1(Availability availability) {
         this.availability = availability;
     }
 
-    @Override
-    public void update(Observable deliveryClock, Object currentInstant) {
-
+    public Integer start(String shipmentFromFactory) {
+        instantOfCurrentDelivery = instantOfDelivery(this, shipmentFromFactory);
+        instantOfReturnToFactoryAfterDelivered = instantOfArrivalToFactory(this, shipmentFromFactory);
+        availability.unavailable(this, instantOfReturnToFactoryAfterDelivered);
+        return instantOfCurrentDelivery;
     }
 
-    public Integer start(String shipmentFromFactory) {
-        final Integer instantOfDelivery = instantOfDelivery(this, shipmentFromFactory);
-        final Integer instantOfArrivalToFactory = instantOfArrivalToFactory(this, shipmentFromFactory);
-        availability.unavailable(this, instantOfArrivalToFactory);
-        return instantOfDelivery;
+    @Override
+    public void update(Observable deliveryClock, Object currentInstant) {
+        if (currentInstant == instantOfReturnToFactoryAfterDelivered) {
+            availability.available(this);
+        }
     }
 
     @Override
