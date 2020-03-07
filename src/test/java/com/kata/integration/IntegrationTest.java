@@ -17,13 +17,13 @@ public class IntegrationTest {
         DeliveryClock deliveryClock = new DeliveryClock();
         Availability availability = new Availability();
         DeliveredItems deliveredItems = new DeliveredItems();
-        Truck1 truck1 = new Truck1(availability);
+        Truck1 truck1 = new Truck1(availability, deliveredItems);
         availability.makeAvailable(truck1);
-        Delivery delivery = new Delivery(availability, deliveryClock, deliveredItems, truck1);
+        Delivery delivery = new Delivery(availability, deliveryClock, truck1);
 
         delivery.process("B");
 
         assertThat(deliveredItems.items()).contains(new Pair<>("B", 5));
-        assertThat(deliveryClock.currentInstant()).isEqualTo(5);
+        assertThat(deliveryClock.currentInstant()).isEqualTo(10);
     }
 }

@@ -11,7 +11,7 @@ public class Availability {
     private Map<Object, Boolean> transporterAvailabilityMap = new HashMap<>();
 
     public void makeAvailable(Object transporter) {
-        transporterAvailabilityMap.put(transporter, TRUE);
+        this.transporterAvailabilityMap.put(transporter, TRUE);
     }
 
     public void makeUnavailable(Truck1 truck1) {

@@ -26,6 +26,9 @@ public class Truck1Test {
     @Mock
     private Availability availability;
 
+    @Mock
+    private DeliveredItems deliveredItems;
+
     @Before
     public void setUp() throws Exception {
         PowerMockito.mockStatic(Destination.class);
@@ -72,9 +75,10 @@ public class Truck1Test {
         PowerMockito.mockStatic(Destination.class);
         BDDMockito.given(Destination.instantOfDelivery(truck1, deliveryDestination)).willReturn(5);
 
-        final Integer instantOfDelivery = truck1.start(deliveryDestination);
+        truck1.start(deliveryDestination);
 
-        assertThat(instantOfDelivery).isEqualTo(5);
+        PowerMockito.verifyStatic(Destination.class);
+        Destination.instantOfDelivery(truck1, deliveryDestination);
     }
 
     @Test
@@ -92,7 +96,7 @@ public class Truck1Test {
     }
 
     @Test
-    public void Given_Instant_Of_Delivery_And_Truck1_Started_When_Instant_Of_Return_Reached_Then_Truck1_Available() {
+    public void Given_Instant_Of_Arrival_To_Facotry_And_Truck1_Started_When_Instant_Of_Return_Reached_Then_Truck1_Available() {
         PowerMockito.mockStatic(Destination.class);
         BDDMockito.given(Destination.instantOfArrivalToFactory(truck1, "test")).willReturn(5);
 
@@ -103,7 +107,18 @@ public class Truck1Test {
     }
 
     @Test
+    public void Given_Instant_Of_Delivery_And_Truck1_Started_When_Instant_Of_Return_Reached_Then_Truck1_Delivers_The_Cargo() {
+        PowerMockito.mockStatic(Destination.class);
+        BDDMockito.given(Destination.instantOfDelivery(truck1, "test")).willReturn(5);
+
+        truck1.start("test");
+        truck1.update(Mockito.mock(DeliveryClock.class), 5);
+
+        verify(deliveredItems).store("test", 5);
+    }
+
+    @Test
     public void When_Truck1_And_Truck1_Compared_Then_They_Are_Equal() {
-        assertThat(new Truck1(availability)).isEqualTo(new Truck1(availability));
+        assertThat(new Truck1(availability, deliveredItems)).isEqualTo(new Truck1(availability, deliveredItems));
     }
 }

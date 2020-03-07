@@ -13,12 +13,14 @@ public class AvailabilityTest {
     private Truck1 truck1;
     private Truck2 truck2;
     private Ship ship;
+    private DeliveredItems deliveredItems;
 
     @Before
     public void setUp() throws Exception {
         deliveryClock = new DeliveryClock();
         availability = new Availability();
-        truck1 = new Truck1(availability);
+        deliveredItems = new DeliveredItems();
+        truck1 = new Truck1(availability, deliveredItems);
         truck2 = new Truck2();
         ship = new Ship();
         availability.makeAvailable(truck1);

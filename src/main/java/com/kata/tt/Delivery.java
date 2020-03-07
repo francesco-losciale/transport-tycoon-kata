@@ -6,28 +6,26 @@ public class Delivery {
 
     private Availability availability;
     private DeliveryClock deliveryClock;
-    private DeliveredItems deliveredItems;
     private Truck1 truck1;
 
-    public Delivery(Availability availability, DeliveryClock deliveryClock, DeliveredItems deliveredItems, Truck1 truck1) {
+    public Delivery(Availability availability, DeliveryClock deliveryClock, Truck1 truck1) {
         this.availability = availability;
         this.deliveryClock = deliveryClock;
-        this.deliveredItems = deliveredItems;
         this.truck1 = truck1;
+        this.availability.makeAvailable(truck1);
+        this.deliveryClock.addObserver(truck1);
     }
 
     public void process(String deliveryDestination) {
-        availability.makeAvailable(truck1);
         while (!availability.isAvailable(truck1)) {
             deliveryClock.tick();
             throwExceptionIfWaitingTooLong();
         }
-        final Integer instantOfDelivery = truck1.start(deliveryDestination);
-        while (deliveryClock.currentInstant() < instantOfDelivery) {
+        truck1.start(deliveryDestination);
+        while (!availability.isAvailable(truck1)) {
             deliveryClock.tick();
             throwExceptionIfWaitingTooLong();
         }
-        deliveredItems.store(deliveryDestination, instantOfDelivery);
     }
 
     private void throwExceptionIfWaitingTooLong() {

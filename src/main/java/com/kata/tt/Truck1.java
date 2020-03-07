@@ -12,22 +12,28 @@ public class Truck1 implements Observer {
     private String name = "Truck1";
     private Integer instantOfCurrentDelivery;
     private Integer instantOfReturnToFactoryAfterDelivered;
+    private String destination;
+    private DeliveredItems deliveredItems;
 
-    public Truck1(Availability availability) {
+    public Truck1(Availability availability, DeliveredItems deliveredItems) {
         this.availability = availability;
+        this.deliveredItems = deliveredItems;
     }
 
-    public Integer start(String shipmentFromFactory) {
-        instantOfCurrentDelivery = instantOfDelivery(this, shipmentFromFactory);
-        instantOfReturnToFactoryAfterDelivered = instantOfArrivalToFactory(this, shipmentFromFactory);
-        availability.makeUnavailable(this);
-        return instantOfCurrentDelivery;
+    public void start(String destination) {
+        this.instantOfCurrentDelivery = instantOfDelivery(this, destination);
+        this.instantOfReturnToFactoryAfterDelivered = instantOfArrivalToFactory(this, destination);
+        this.destination = destination;
+        this.availability.makeUnavailable(this);
     }
 
     @Override
     public void update(Observable deliveryClock, Object currentInstant) {
         if (currentInstant == instantOfReturnToFactoryAfterDelivered) {
             availability.makeAvailable(this);
+        }
+        if (currentInstant == instantOfCurrentDelivery) {
+            deliveredItems.store(destination, (Integer) currentInstant);
         }
     }
 
