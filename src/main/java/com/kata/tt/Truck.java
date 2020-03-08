@@ -6,7 +6,7 @@ import java.util.Observer;
 import static com.kata.tt.Destination.instantOfArrivalToFactory;
 import static com.kata.tt.Destination.instantOfDelivery;
 
-public class Truck1 implements Observer {
+public class Truck implements Observer {
 
     private Availability availability;
     private String name = "Truck1";
@@ -15,7 +15,7 @@ public class Truck1 implements Observer {
     private String destination;
     private DeliveredItems deliveredItems;
 
-    public Truck1(Availability availability, DeliveredItems deliveredItems) {
+    public Truck(Availability availability, DeliveredItems deliveredItems) {
         this.availability = availability;
         this.deliveredItems = deliveredItems;
     }
@@ -42,11 +42,11 @@ public class Truck1 implements Observer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Truck1 truck1 = (Truck1) o;
+        Truck truck = (Truck) o;
 
-        if (availability != null ? !availability.equals(truck1.availability) : truck1.availability != null)
+        if (availability != null ? !availability.equals(truck.availability) : truck.availability != null)
             return false;
-        return name != null ? name.equals(truck1.name) : truck1.name == null;
+        return name != null ? name.equals(truck.name) : truck.name == null;
     }
 
     @Override

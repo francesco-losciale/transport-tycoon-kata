@@ -10,7 +10,7 @@ public class AvailabilityTest {
 
     private Availability availability;
     private DeliveryClock deliveryClock;
-    private Truck1 truck1;
+    private Truck truck;
     private Truck2 truck2;
     private Ship ship;
     private DeliveredItems deliveredItems;
@@ -20,26 +20,26 @@ public class AvailabilityTest {
         deliveryClock = new DeliveryClock();
         availability = new Availability();
         deliveredItems = new DeliveredItems();
-        truck1 = new Truck1(availability, deliveredItems);
+        truck = new Truck(availability, deliveredItems);
         truck2 = new Truck2();
         ship = new Ship();
-        availability.makeAvailable(truck1);
+        availability.makeAvailable(truck);
         availability.makeAvailable(truck2);
         availability.makeAvailable(ship);
     }
 
     @Test
     public void When_Created_Then_All_The_Transporters_Are_Available() {
-        assertThat(availability.isAvailable(truck1)).isTrue();
+        assertThat(availability.isAvailable(truck)).isTrue();
         assertThat(availability.isAvailable(truck2)).isTrue();
         assertThat(availability.isAvailable(ship)).isTrue();
     }
 
     @Test
     public void When_Truck1_Is_Unavailable_Then_Only_Other_Transporters_Are_Available() {
-        availability.makeUnavailable(truck1);
+        availability.makeUnavailable(truck);
 
-        assertThat(availability.isAvailable(truck1)).isFalse();
+        assertThat(availability.isAvailable(truck)).isFalse();
         assertThat(availability.isAvailable(truck2)).isTrue();
         assertThat(availability.isAvailable(ship)).isTrue();
     }

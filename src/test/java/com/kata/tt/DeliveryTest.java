@@ -23,11 +23,11 @@ public class DeliveryTest {
     private DeliveryClock clock;
 
     @Mock
-    private Truck1 truck1;
+    private Truck truck;
 
     @Test
     public void When_Delivery_Created_Then_Truck1_Observes_DeliveryClock() {
-        verify(clock).addObserver(truck1);
+        verify(clock).addObserver(truck);
     }
 
     @Test(expected = RuntimeException.class)
@@ -44,7 +44,7 @@ public class DeliveryTest {
 
         delivery.process("A");
 
-        verify(truck1).start("A");
+        verify(truck).start("A");
     }
 
 }

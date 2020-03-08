@@ -4,7 +4,7 @@ import com.kata.tt.Availability;
 import com.kata.tt.DeliveredItems;
 import com.kata.tt.Delivery;
 import com.kata.tt.DeliveryClock;
-import com.kata.tt.Truck1;
+import com.kata.tt.Truck;
 import org.javatuples.Pair;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,12 +16,12 @@ public class IntegrationTest {
     private DeliveryClock deliveryClock = new DeliveryClock();
     private Availability availability = new Availability();
     private DeliveredItems deliveredItems = new DeliveredItems();
-    private Truck1 truck1 = new Truck1(availability, deliveredItems);
-    private Delivery delivery = new Delivery(availability, deliveryClock, truck1);
+    private Truck truck = new Truck(availability, deliveredItems);
+    private Delivery delivery = new Delivery(availability, deliveryClock, truck);
 
     @Before
     public void setUp() throws Exception {
-        availability.makeAvailable(truck1);
+        availability.makeAvailable(truck);
     }
 
     @Test

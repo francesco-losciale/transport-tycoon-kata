@@ -14,8 +14,8 @@ public class Availability {
         this.transporterAvailabilityMap.put(transporter, TRUE);
     }
 
-    public void makeUnavailable(Truck1 truck1) {
-        this.transporterAvailabilityMap.put(truck1, FALSE);
+    public void makeUnavailable(Truck truck) {
+        this.transporterAvailabilityMap.put(truck, FALSE);
     }
 
     public boolean isAvailable(Object transporter) {
