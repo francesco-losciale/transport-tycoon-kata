@@ -17,15 +17,22 @@ public class Delivery {
     }
 
     public void process(String deliveryDestination) {
+        Truck transporter = availableTruckNow();
+        transporter.start(deliveryDestination);
+        while (!availability.isAvailable(transporter)) {
+            deliveryClock.tick();
+            throwExceptionIfWaitingTooLong();
+        }
+    }
+
+    private Truck availableTruckNow() {
+        Truck transporter = null;
         while (!availability.isAvailable(truck)) {
             deliveryClock.tick();
             throwExceptionIfWaitingTooLong();
         }
-        truck.start(deliveryDestination);
-        while (!availability.isAvailable(truck)) {
-            deliveryClock.tick();
-            throwExceptionIfWaitingTooLong();
-        }
+        transporter = truck;
+        return transporter;
     }
 
     private void throwExceptionIfWaitingTooLong() {
